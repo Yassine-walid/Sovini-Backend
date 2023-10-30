@@ -1,11 +1,8 @@
 package com.example.crud.Controllers;
 
 import com.example.crud.Entity.Profession;
-import com.example.crud.Repository.ProfessionRepository;
 import com.example.crud.Service.ProfessionServices;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +21,11 @@ public class ProfessionController {
         return professionServices.getAllProfessions();
     }
 
+    @GetMapping("/allNames")
+        public List<String> getAllProfessionsNames(){
+        return professionServices.getAllProfessionsNames();
+    }
+
     @PostMapping("/add")
     public Profession saveProfession(@RequestBody Profession profession){
 
@@ -38,14 +40,16 @@ public class ProfessionController {
     }
 
     @PutMapping("/edit/{id}")
-    public Profession updateProfession(@PathVariable("id") String id,@RequestBody Profession profession) throws Exception {
+    public Profession updateProfession(@PathVariable("id") Long id,@RequestBody Profession profession) throws Exception {
         professionServices.updateProfession(id,profession);
         return profession;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProfession(@PathVariable("id") String id) throws Exception{
+    public String deleteProfession(@PathVariable("id") Long id) throws Exception{
         professionServices.deleteProfession(id);
         return "Profession deleted";
     }
+
+
 }

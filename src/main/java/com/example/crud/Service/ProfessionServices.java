@@ -3,6 +3,7 @@ package com.example.crud.Service;
 import com.example.crud.Entity.Profession;
 import com.example.crud.Repository.ProfessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,13 @@ public class ProfessionServices {
     @Autowired
     private ProfessionRepository professionRepository;
 
+
     public List<Profession> getAllProfessions(){
         return professionRepository.findAll();
+    }
+
+    public List<String> getAllProfessionsNames(){
+        return professionRepository.findProfessionName();
     }
 
     public void saveProfession(Profession profession){
@@ -26,7 +32,7 @@ public class ProfessionServices {
         professionRepository.save(profession);
     }
 
-    public void updateProfession(String id, Profession profession) throws Exception {
+    public void updateProfession(Long id, Profession profession) throws Exception {
       Optional<Profession> professionData = professionRepository.findById(id);
 
       if(professionData.isPresent()){
@@ -43,7 +49,7 @@ public class ProfessionServices {
       }
     }
 
-    public void deleteProfession(String id) throws Exception{
+    public void deleteProfession(Long id) throws Exception{
         Optional<Profession> profession = professionRepository.findById(id);
         if (profession.isPresent()){
             professionRepository.deleteById(id);
@@ -51,5 +57,9 @@ public class ProfessionServices {
             throw new Exception("Profession not found");
         }
     }
+
+
+
+
 
 }

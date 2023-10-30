@@ -17,9 +17,32 @@ public class WorkerController {
     @Autowired
     private WorkerServices workerServices;
 
+
+    @GetMapping("/all")
+    public List<Worker> getAllWorkers(){
+        return workerServices.getWorkers();
+    }
+
+    @GetMapping("/allValidated")
+    public List<Worker> getAllValidatedWorkers(){
+        return workerServices.getValidatedWorkers();
+    }
+
+    @GetMapping("/allNotValidated")
+    public List<Worker> getAllNotValidatedWorkers(){
+        return workerServices.getNotValidatedWorkers();
+    }
+
+
+
     @GetMapping("/all/{id}")
-    public List<Worker> getAllWorkers(@PathVariable String id){
+    public List<Worker> getAllWorkersByProffesion(@PathVariable String id){
         return workerServices.getWorkersByProfession(id);
+    }
+
+    @GetMapping("/allSponsored/{id}")
+    public List<Worker> getAllWorkersSponsored(@PathVariable String id){
+        return workerServices.getWorkersByProfessionAndSponsorisation(id);
     }
 
     @PostMapping("/add")
@@ -33,5 +56,11 @@ public class WorkerController {
 
         return worker;
 
+    }
+
+    @PutMapping("/sponsorisation/{id}")
+    public String updateWorkerSponsorisation(@PathVariable("id") Long id) throws Exception {
+        workerServices.paySponsorisation(id);
+        return "worker";
     }
 }
